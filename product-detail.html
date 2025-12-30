@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product List with Cart - Project Details | Teniola Tedlance</title>
+  <meta name="description" content="Detailed page for the Product List with Cart e-commerce project by Teniola Tedlance.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="braids-detail.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">
+        <h1>Teniola Oluwafolakemi Tedlance</h1>
+      </div>
+      <ul>
+        <li><a href="index.html">← Back to Portfolio</a></li>
+        <li><a href="index.html#projects">All Projects</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+        <li><button id="theme-toggle" aria-label="Toggle dark mode">☀️</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section id="hero">
+      <h2>Product List with Cart</h2>
+      <p>Interactive E-Commerce Shopping Cart Application</p>
+      <div style="display: flex; gap: 15px; justify-content: center; margin-top: 20px; flex-wrap: wrap;">
+        <a href="product-list-with-cart-main/index.html" class="cta-btn" target="_blank">View Live Project</a>
+        <a href="index.html#projects" class="cta-btn secondary">Back to Portfolio</a>
+      </div>
+    </section>
+
+    <!-- Project Image -->
+    <section style="padding: 60px 5%; background: var(--card-bg);">
+      <div style="max-width: 1000px; margin: 0 auto;">
+        <img src="screenshots/product-cart-full.png" alt="Product List with Cart" style="width: 100%; border-radius: 20px; border: 3px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+      </div>
+    </section>
+
+    <!-- Project Overview -->
+    <section style="padding: 80px 5%;">
+      <div style="max-width: 1000px; margin: 0 auto;">
+        <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 30px;">Project Overview</h2>
+        <p style="font-size: 1.2rem; line-height: 1.8; text-align: center; color: var(--text);">The Product List with Cart is a fully functional e-commerce shopping cart application that allows users to browse dessert items, add products to their cart, adjust quantities, and see real-time price calculations. Built with vanilla JavaScript, this project demonstrates core frontend development skills including DOM manipulation, state management, and responsive design.</p>
+      </div>
+    </section>
+
+    <!-- Problem & Solution -->
+    <section style="padding: 80px 5%; background: var(--card-bg);">
+      <div style="max-width: 1200px; margin: 0 auto;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;">
+          <!-- Problem Column -->
+          <div style="background: var(--bg); padding: 40px; border-radius: 20px; border: 3px solid var(--border);">
+            <h2 style="font-size: 2rem; margin-bottom: 20px; color: var(--accent);">The Problem</h2>
+            <p style="margin-bottom: 20px; line-height: 1.8;">E-commerce applications require intuitive shopping cart functionality that provides users with immediate feedback on their selections. Many shopping cart implementations lack smooth interactions, clear visual feedback, and proper state management.</p>
+            
+            <h3 style="font-size: 1.3rem; margin: 30px 0 15px;">Key Challenges</h3>
+            <ul style="list-style: none; padding: 0;">
+              <li style="padding: 12px 0; border-bottom: 1px solid var(--border);">
+                <strong style="color: var(--accent);">Real-Time Updates:</strong> Cart totals must update instantly
+              </li>
+              <li style="padding: 12px 0; border-bottom: 1px solid var(--border);">
+                <strong style="color: var(--accent);">User Experience:</strong> Clear visual feedback for all actions
+              </li>
+              <li style="padding: 12px 0; border-bottom: 1px solid var(--border);">
+                <strong style="color: var(--accent);">State Management:</strong> Consistent cart state
+              </li>
+              <li style="padding: 12px 0;">
+                <strong style="color: var(--accent);">Responsive Design:</strong> Works on all devices
+              </li>
+            </ul>
+          </div>
+
+          <!-- Solution Column -->
+          <div style="background: var(--bg); padding: 40px; border-radius: 20px; border: 3px solid var(--border);">
+            <h2 style="font-size: 2rem; margin-bottom: 20px; color: var(--accent);">The Solution</h2>
+            <p style="margin-bottom: 20px; line-height: 1.8;">I built a clean, intuitive shopping cart application with instant visual feedback and smooth animations. The application features a responsive grid layout for products and a dynamic sidebar cart that updates in real-time.</p>
+            
+            <h3 style="font-size: 1.3rem; margin: 30px 0 15px;">Key Features</h3>
+            <ul style="list-style: none; padding: 0;">
+              <li style="padding: 12px 0; border-bottom: 1px solid var(--border);">
+                <strong style="color: var(--accent);">Dynamic Product Grid:</strong> Responsive layout
+              </li>
+              <li style="padding: 12px 0; border-bottom: 1px solid var(--border);">
+                <strong style="color: var(--accent);">Interactive Cart:</strong> Instant visual feedback
+              </li>
+              <li style="padding: 12px 0; border-bottom: 1px solid var(--border);">
+                <strong style="color: var(--accent);">Quantity Control:</strong> + and - buttons
+              </li>
+              <li style="padding: 12px 0;">
+                <strong style="color: var(--accent);">Real-Time Calculations:</strong> Automatic price updates
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Core Features -->
+    <section style="padding: 80px 5%;">
+      <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 50px;">Core Features</h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+          <div style="background: var(--card-bg); padding: 30px; border-radius: 20px; border: 2px solid var(--border); text-align: center;">
+            <div style="font-size: 3rem; margin-bottom: 15px;">🛒</div>
+            <h3 style="font-size: 1.3rem; margin: 15px 0;">Add to Cart</h3>
+            <p style="line-height: 1.6;">Users can easily add dessert items to their cart with a single click. The button transforms into quantity controls.</p>
+          </div>
+
+          <div style="background: var(--card-bg); padding: 30px; border-radius: 20px; border: 2px solid var(--border); text-align: center;">
+            <div style="font-size: 3rem; margin-bottom: 15px;">➕➖</div>
+            <h3 style="font-size: 1.3rem; margin: 15px 0;">Quantity Management</h3>
+            <p style="line-height: 1.6;">Intuitive + and - buttons with smooth animations and immediate price recalculations.</p>
+          </div>
+
+          <div style="background: var(--card-bg); padding: 30px; border-radius: 20px; border: 2px solid var(--border); text-align: center;">
+            <div style="font-size: 3rem; margin-bottom: 15px;">🗑️</div>
+            <h3 style="font-size: 1.3rem; margin: 15px 0;">Remove Items</h3>
+            <p style="line-height: 1.6;">Clear remove button (×) that deletes items with smooth fade-out animations.</p>
+          </div>
+
+          <div style="background: var(--card-bg); padding: 30px; border-radius: 20px; border: 2px solid var(--border); text-align: center;">
+            <div style="font-size: 3rem; margin-bottom: 15px;">💰</div>
+            <h3 style="font-size: 1.3rem; margin: 15px 0;">Real-Time Totals</h3>
+            <p style="line-height: 1.6;">Automatic calculation and display of order totals as cart changes.</p>
+          </div>
+
+          <div style="background: var(--card-bg); padding: 30px; border-radius: 20px; border: 2px solid var(--border); text-align: center;">
+            <div style="font-size: 3rem; margin-bottom: 15px;">✅</div>
+            <h3 style="font-size: 1.3rem; margin: 15px 0;">Order Confirmation</h3>
+            <p style="line-height: 1.6;">Professional modal with order summary and carbon-neutral delivery badge.</p>
+          </div>
+
+          <div style="background: var(--card-bg); padding: 30px; border-radius: 20px; border: 2px solid var(--border); text-align: center;">
+            <div style="font-size: 3rem; margin-bottom: 15px;">📱</div>
+            <h3 style="font-size: 1.3rem; margin: 15px 0;">Fully Responsive</h3>
+            <p style="line-height: 1.6;">Seamless adaptation to mobile, tablet, and desktop screens.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Application Screenshots -->
+    <section style="padding: 80px 5%; background: var(--card-bg);">
+      <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 20px;">Application Screenshots</h2>
+        <p style="font-size: 1.2rem; text-align: center; margin-bottom: 50px;">Follow the complete user journey from browsing products to order confirmation</p>
+        
+        <div style="display: grid; gap: 40px;">
+          <div style="background: var(--bg); border-radius: 15px; overflow: hidden; border: 3px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+            <img src="screenshots/product-cart-empty.png" alt="Product List - Empty Cart State" style="width: 100%; display: block;">
+            <p style="padding: 20px; text-align: center;"><strong style="color: var(--accent);">Step 1:</strong> Browse dessert products with empty cart sidebar</p>
+          </div>
+
+          <div style="background: var(--bg); border-radius: 15px; overflow: hidden; border: 3px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+            <img src="screenshots/product-cart-full.png" alt="Shopping Cart with Items" style="width: 100%; display: block;">
+            <p style="padding: 20px; text-align: center;"><strong style="color: var(--accent);">Step 2:</strong> Cart with 5 items showing real-time total ($84.00)</p>
+          </div>
+
+          <div style="background: var(--bg); border-radius: 15px; overflow: hidden; border: 3px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+            <img src="screenshots/product-cart-confirm.png" alt="Order Confirmation Modal" style="width: 100%; display: block;">
+            <p style="padding: 20px; text-align: center;"><strong style="color: var(--accent);">Step 3:</strong> Order confirmation with complete summary</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technologies Used -->
+    <section style="padding: 80px 5%;">
+      <div style="max-width: 1000px; margin: 0 auto; text-align: center;">
+        <h2 style="font-size: 2.5rem; margin-bottom: 30px;">Technologies Used</h2>
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 30px;">
+          <span style="background: var(--accent); color: white; padding: 10px 20px; border-radius: 20px; font-weight: 600;">HTML5</span>
+          <span style="background: var(--accent); color: white; padding: 10px 20px; border-radius: 20px; font-weight: 600;">CSS3</span>
+          <span style="background: var(--accent); color: white; padding: 10px 20px; border-radius: 20px; font-weight: 600;">JavaScript ES6+</span>
+          <span style="background: var(--accent); color: white; padding: 10px 20px; border-radius: 20px; font-weight: 600;">DOM Manipulation</span>
+          <span style="background: var(--accent); color: white; padding: 10px 20px; border-radius: 20px; font-weight: 600;">CSS Grid</span>
+          <span style="background: var(--accent); color: white; padding: 10px 20px; border-radius: 20px; font-weight: 600;">Flexbox</span>
+          <span style="background: var(--accent); color: white; padding: 10px 20px; border-radius: 20px; font-weight: 600;">Responsive Design</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- What I Learned -->
+    <section style="padding: 80px 5%; background: var(--card-bg);">
+      <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 50px;">What I Learned</h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
+          <div style="background: var(--bg); padding: 30px; border-radius: 15px; border: 2px solid var(--border);">
+            <h3 style="font-size: 1.4rem; margin-bottom: 15px; color: var(--accent);">State Management</h3>
+            <p style="line-height: 1.7; margin-bottom: 15px;">Learned to maintain a single source of truth for application state and update UI reactively based on state changes.</p>
+            <ul style="margin-left: 20px; line-height: 1.8;">
+              <li>Keep state separate from UI</li>
+              <li>Use array methods for data transformation</li>
+              <li>Avoid inconsistent state</li>
+            </ul>
+          </div>
+
+          <div style="background: var(--bg); padding: 30px; border-radius: 15px; border: 2px solid var(--border);">
+            <h3 style="font-size: 1.4rem; margin-bottom: 15px; color: var(--accent);">User Experience Design</h3>
+            <p style="line-height: 1.7; margin-bottom: 15px;">Discovered how small details like animations and instant feedback significantly impact user perception.</p>
+            <ul style="margin-left: 20px; line-height: 1.8;">
+              <li>Provide immediate visual feedback</li>
+              <li>Use animations to guide attention</li>
+              <li>Clear call-to-action buttons</li>
+            </ul>
+          </div>
+
+          <div style="background: var(--bg); padding: 30px; border-radius: 15px; border: 2px solid var(--border);">
+            <h3 style="font-size: 1.4rem; margin-bottom: 15px; color: var(--accent);">Responsive Design</h3>
+            <p style="line-height: 1.7; margin-bottom: 15px;">Reinforced the importance of mobile-first design using CSS Grid and Flexbox together.</p>
+            <ul style="margin-left: 20px; line-height: 1.8;">
+              <li>Mobile-first CSS approach</li>
+              <li>CSS Grid auto-fit for flexibility</li>
+              <li>Touch-friendly button sizes</li>
+            </ul>
+          </div>
+
+          <div style="background: var(--bg); padding: 30px; border-radius: 15px; border: 2px solid var(--border);">
+            <h3 style="font-size: 1.4rem; margin-bottom: 15px; color: var(--accent);">Code Organization</h3>
+            <p style="line-height: 1.7; margin-bottom: 15px;">Learned to organize JavaScript into logical functions with single responsibilities for better maintainability.</p>
+            <ul style="margin-left: 20px; line-height: 1.8;">
+              <li>Break code into small functions</li>
+              <li>Use descriptive naming</li>
+              <li>Separate concerns (data, UI, events)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section style="padding: 80px 5%; background: linear-gradient(135deg, var(--soft-pink), var(--accent)); text-align: center; color: white;">
+      <h2 style="font-size: 2.5rem; margin-bottom: 20px; color: white;">View the Live Project</h2>
+      <p style="font-size: 1.2rem; margin-bottom: 30px;">Experience the fully functional shopping cart application</p>
+      <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+        <a href="product-list-with-cart-main/index.html" class="cta-btn" target="_blank" style="background: white; color: var(--accent);">Launch Application →</a>
+        <a href="index.html#projects" class="cta-btn secondary" style="background: transparent; border-color: white; color: white;">View More Projects</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Teniola Tedlance • Matric No: 2212031603051</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

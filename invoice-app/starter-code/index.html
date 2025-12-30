@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Invoice Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+<style>
+  /* ===== Base Styles ===== */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Spartan', sans-serif;
+  background: #f8f8fb;
+  color: #0c0e16;
+  transition: background 0.3s, color 0.3s;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;       /* Sidebar + content */
+}
+
+/* Container now just splits sidebar and main content */
+.container {
+  display: flex;
+  flex: 1;
+}
+
+/* Sidebar stays pinned on the left */
+.sidebar {
+  width: 80px;
+  background: #1e2139;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 0 20px 20px 0;
+  position: fixed;     /* Stick to the left edge */
+  top: 0;
+  left: 0;
+  bottom: 0;
+}
+
+/* Main content takes full width minus sidebar */
+.main-content {
+  flex: 1;
+  padding: 3rem 2rem;
+  max-width: 800px;
+  margin-left: 100px; /* push it to the right of sidebar */
+}
+
+  .logo { width: 100%; }
+  .logo img {
+    width: 100%; height: auto; display: block;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+
+  /* Theme & Profile Section */
+  .theme-section {
+    display: flex; flex-direction: column; align-items: center; width: 100%;
+  }
+  .icon-btn {
+    background: none; border: none; cursor: pointer;
+    padding: 0.5rem; border-radius: 50%;
+    transition: background 0.2s; margin-bottom: 0.5rem;
+  }
+  .icon-btn:hover { background: rgba(255,255,255,0.1); }
+  .theme-section img { width: 24px; height: 24px; }
+  .divider { width: 100%; border: none; border-top: 1px solid #494e6e; }
+
+  /* ===== Profile Image ===== */
+  .profile { padding: 1rem 0; display: flex; justify-content: center; width: 100%; }
+  .profile img {
+    width: 50px; height: 50px; border-radius: 50%;
+    object-fit: cover; border: 2px solid #fff;
+  }
+
+  /* ===== Main Content ===== */
+  .main-content {
+    flex: 1; padding: 3rem 2rem;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem;
+  }
+  .header h1 { font-size: 2rem; }
+  .header-right { display: flex; gap: 1rem; align-items: center; }
+
+  /* Filter Dropdown */
+  .filter {
+    position: relative; display: flex; align-items: center; gap: 0.3rem;
+    cursor: pointer; font-weight: bold; user-select: none;
+  }
+  .filter img.arrow { width: 12px; height: 8px; transition: transform 0.3s ease; }
+  .arrow.open { transform: rotate(180deg); }
+  .dropdown {
+    display: none; position: absolute; top: 2rem; right: 0;
+    background: #fff; border: 1px solid #ccc; border-radius: 8px;
+    padding: 0.5rem 0; list-style: none;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); z-index: 100;
+  }
+  body.dark .dropdown { background: #1e2139; border: 1px solid #494e6e; }
+  .dropdown li { padding: 0.5rem 1rem; cursor: pointer; }
+  .dropdown li:hover { background: rgba(0,0,0,0.05); }
+
+  /* New Invoice Button */
+  .new-invoice-btn {
+    background: none; border: none; padding: 0; cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .new-invoice-btn img {
+    width: 150px; height: 150px; display: block;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .new-invoice-btn:hover img { transform: scale(1.1); }
+
+  /* Invoice List */
+  .invoice-list ul { list-style: none; }
+  .invoice-item {
+    display: grid; grid-template-columns: 100px 150px 1fr 100px 100px auto;
+    align-items: center; gap: 1rem;
+    background: #fff; margin-bottom: 1rem; padding: 1rem;
+    border-radius: 10px; transition: transform 0.2s, background 0.2s;
+  }
+  body.dark .invoice-item { background: #1e2139; }
+  .invoice-item:hover { transform: scale(1.01); }
+
+  /* Arrow as link */
+  .arrow-btn { text-decoration: none; font-size: 1.5rem; color: inherit; cursor: pointer; transition: transform 0.2s ease; }
+  .arrow-btn:hover { transform: scale(1.2); }
+
+  /* Status Tags */
+  .status { padding: 0.3rem 0.6rem; border-radius: 5px; font-weight: bold; text-align: center; font-size: 0.85rem; }
+  .status.paid { background: rgba(51,214,159,0.2); color: #33d69f; }
+  .status.pending { background: rgba(255,143,0,0.2); color: #ff8f00; }
+  .status.draft { background: rgba(55,59,83,0.2); color: #373b53; }
+
+  /* Empty State */
+  .empty-state { display: none; text-align: center; padding: 3rem 1rem; color: #888; }
+  .empty-state img { max-width: 200px; margin-bottom: 1.5rem; }
+  body.dark .empty-state { color: #bbb; }
+
+  /* ===== New Invoice Overlay ===== */
+  :root {
+    --overlay-bg-light: rgba(255, 255, 255, 0.6);
+    --overlay-bg-dark: rgba(0, 0, 0, 0.5);
+  }
+  [data-theme="light"] { --overlay-bg: var(--overlay-bg-light); }
+  [data-theme="dark"] { --overlay-bg: var(--overlay-bg-dark); }
+
+  .invoice-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: flex-start;
+    align-items: stretch;
+    z-index: 1000;
+    background: var(--overlay-bg);
+    transition: background 0.3s ease;
+  }
+  [data-theme="light"] .invoice-overlay {
+    background: rgba(255, 255, 255, 0.6);
+  }
+  [data-theme="dark"] .invoice-overlay {
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .invoice-form {
+    width: 50%;
+    height: 100%;
+    padding: 2rem;
+    overflow-y: auto;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+  }
+  body:not(.dark) .invoice-form {
+    background: #ffffff;
+    color: #000000;
+  }
+  body.dark .invoice-form {
+    background: #1e2139;
+    color: #ffffff;
+  }
+  .invoice-overlay.active .invoice-form { transform: translateX(0); }
+
+  .invoice-form h2, .invoice-form h3 { margin-bottom: 1rem; }
+
+  /* Inputs */
+  .invoice-form input, .invoice-form select {
+    width: 100%; padding: 0.7rem; margin-bottom: 1rem;
+    border-radius: 8px; border: none;
+    background: #f9f9fb; color: #000;
+    transition: background 0.3s, color 0.3s;
+  }
+  body.dark .invoice-form input,
+  body.dark .invoice-form select {
+    background: #252945; color: #fff;
+  }
+
+  .invoice-form .row {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .invoice-form .form-group {
+    flex: 1;
+  }
+
+  /* Equal sizing for Invoice Date & Payment Terms */
+  #invoice-date,
+  #payment-terms {
+    width: 100%;
+    height: 40px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    border-radius: 8px;
+    border: none;
+    background: #f9f9fb;
+    color: #000;
+    transition: background 0.3s, color 0.3s;
+    box-sizing: border-box;
+  }
+  body.dark #invoice-date,
+  body.dark #payment-terms {
+    background: #252945;
+    color: #fff;
+  }
+
+  /* Date input wrapper */
+  .date-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .date-input-wrapper input {
+    padding-right: 2rem;
+  }
+  .date-input-wrapper .calendar-icon {
+    position: absolute;
+    right: 0.75rem;
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Buttons */
+  .form-actions {
+    display: flex; justify-content: space-between; gap: 0.5rem; margin-top: 1.5rem;
+  }
+  .form-actions button {
+    flex: 1; padding: 0.8rem; border: none;
+    border-radius: 8px; cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+  }
+  .form-actions button.primary { background: #7c5dfa; color: #fff; }
+  .form-actions button:not(.primary) {
+    background: #dfe3fa; color: #000;
+  }
+  body.dark .form-actions button:not(.primary) {
+    background: #252945; color: #fff;
+  }
+
+  @media (max-width: 768px) {
+    .invoice-item { grid-template-columns: 1fr; text-align: left; }
+    .header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  }
+
+  .select-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.select-wrapper select {
+  width: 100%;
+  padding: 0.5rem 2rem 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  border: none;
+  appearance: none; /* hides default arrow */
+  background: #f9f9fb;
+  color: #000;
+}
+
+body.dark .select-wrapper select {
+  background: #252945;
+  color: #fff;
+}
+
+.select-wrapper .dropdown-icon {
+  position: absolute;
+  right: 0.75rem;
+  width: 12px;
+  height: 12px;
+  pointer-events: none; /* so clicking goes to select */
+}
+
+/* Keep original layout */
+.labels-row,
+.item-row {
+  display: grid;
+  grid-template-columns: 2fr 0.7fr 1fr 1fr 40px;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ✅ Make Price & Total headings top-left aligned */
+.labels-row div:nth-child(3),
+.labels-row div:nth-child(4) {
+  justify-self: start; /* Headings sit at left edge of columns */
+  text-align: left;    /* Headings text is left-aligned */
+}
+
+/* Align Price & Total values directly under headings */
+.item-price,
+.item-total {
+  text-align: left; /* Align values with headings */
+}
+
+/* Style Total values */
+.item-total {
+  font-weight: bold;
+  color: #DFE3FA;
+  white-space: nowrap;
+}
+
+/* Keep trash icon at far right */
+.delete-item {
+  background: none;
+  border: none;
+  cursor: pointer;
+  justify-self: end;
+  padding: 0;
+}
+
+
+
+/* ===== Light Mode (default) ===== */
+.item-name,
+.item-qty,
+.item-price {
+  font-weight: bold;
+  color: #000; /* Black text in light mode */
+  background: transparent;
+  border: 1px solid #d6defe;
+  border-radius: 6px;
+  padding: 8px;
+}
+
+/* ===== Dark Mode ===== */
+body.dark .item-name,
+body.dark .item-qty,
+body.dark .item-price {
+  color: #fff; /* White text in dark mode */
+  background: transparent;
+  font-weight: bold;
+}
+
+
+/* Bill From & Bill To (purple) */
+.invoice-form h3 {
+  color: #9277FF; 
+  font-weight: bold;
+}
+
+/* Specifically style Item List heading */
+.item-list h3 {
+  color: #7E88C3; 
+  font-weight: bold;
+}
+
+/* All other labels and table headers (soft blue) */
+.invoice-form label,
+.labels-row div {
+  color: #7E88C3; 
+  font-weight: bold;
+}
+
+/* Add New Item Button Styling */
+#addItemBtn {
+  display: block;
+  width: 100%;
+  padding: 1rem 0;
+  margin-top: 1rem;
+  border: none;
+  border-radius: 50px; /* Pill shape */
+  background-color: #F9FAFE; /* Light background */
+  color: #7C5DFA; /* Purple text */
+  font-weight: bold;
+  font-size: 0.95rem;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+#addItemBtn:hover {
+  background-color: #DFE3FA; /* Slightly darker on hover */
+  transform: scale(1.02); /* Subtle grow effect */
+}
+
+
+/* Shared button base - no forced width */
+.form-actions button {
+  border: none;
+  border-radius: 50px; /* Pill shape */
+  font-size: 0.85rem;
+  font-weight: bold;
+  padding: 0.6rem 1.2rem; /* Height defined here */
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+  width: auto; 
+  min-width: unset; 
+}
+
+/* Discard button - same height, tighter width */
+#discardBtn {
+  background-color: #F9FAFE;
+  color: #7E88C3;
+  font-size: 0.85rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 50px;
+  width: auto;
+  min-width: 0;
+  flex: 0 0 auto;
+  display: inline-block;
+}
+#discardBtn:hover {
+  background-color: #DFE3FA;
+}
+
+/* ==================== Save as Draft ==================== */
+body.dark .form-actions-right button:first-of-type {
+  background-color: #141625; /* Dark mode background */
+  color: #DFE3FA;           /* Dark mode text */
+}
+
+body:not(.dark) .form-actions-right button:first-of-type {
+  background-color: #141625; /* Light mode */
+  color: #888EB0;
+}
+
+/* ==================== Save & Send ==================== */
+body.dark .form-actions-right .primary {
+  background-color: #7C5DFA; /* Dark mode */
+  color: #fff;
+}
+
+body:not(.dark) .form-actions-right .primary {
+  background-color: #9277FF; /* Light mode */
+  color: #fff;
+}
+
+/* Dark Mode */
+body.dark-mode .form-actions-right .primary,
+.dark .form-actions-right .primary,
+[data-theme="dark"] .form-actions-right .primary {
+  background-color: #7C5DFA; /* Dark mode */
+  color: #fff;
+}
+
+/* Layout: discard left, others right */
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+/* Group Save as Draft & Save & Send */
+.form-actions-right {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Remove number input spinners */
+
+/* Chrome, Safari, Edge, Opera */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 0.25rem 0.75rem;
+  text-transform: capitalize;
+}
+
+/* Bullet point before each status */
+.status::before {
+  content: "●";
+  font-size: 1.2rem;
+}
+
+/* Colors */
+.status.paid {
+  color: #33d69f;
+  background: rgba(51, 214, 159, 0.1);
+}
+.status.paid::before {
+  color: #33d69f;
+}
+
+.status.pending {
+  color: #ff8f00;
+  background: rgba(255, 143, 0, 0.1);
+}
+.status.pending::before {
+  color: #ff8f00;
+}
+
+.status.draft {
+  color: #373b53;
+  background: rgba(55, 59, 83, 0.1);
+}
+.status.draft::before {
+  color: #373b53;
+}
+
+
+/* ===== Invoice Detail Overlay ===== */
+#invoiceDetailOverlay .invoice-form {
+  width: 50%;
+  height: 100%;
+  padding: 2rem;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+}
+
+#invoiceDetailOverlay.active .invoice-form {
+  transform: translateX(0);
+}
+
+/* Dark Mode background */
+body.dark {
+  background: #141625;  /* main app background */
+  color: #ffffff;       /* default text */
+}
+8
+</style>
+
+
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <img src="./assets/Group 9.png" alt="Logo" />
+      </div>
+      <div class="theme-section">
+        <button id="themeToggle" class="icon-btn">
+          <img id="themeIcon" src="./assets/icon-sun.svg" alt="Toggle Theme" />
+        </button>
+        <hr class="divider" />
+        <div class="profile">
+          <img src="./assets/image-avatar.jpg" alt="User Profile Image" />
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <h1>Invoices</h1>
+          <p id="invoice-count">There are 7 total invoices</p>
+        </div>
+        <div class="header-right">
+          <div class="filter">
+            <span class="filter-text">Filter by status</span>
+            <img src="./assets/icon-arrow-down.svg" alt="Dropdown Arrow" class="arrow" />
+            <ul id="filterDropdown" class="dropdown">
+              <li data-status="all">All</li>
+              <li data-status="draft"> Draft</li>
+              <li data-status="pending">Pending</li>
+              <li data-status="paid">Paid</li>
+            </ul>
+          </div>
+
+          <!-- New Invoice Button -->
+          <button id="newInvoiceBtn" class="new-invoice-btn">
+            <img src="./assets/Group 4.svg" alt="New Invoice" />
+          </button>
+        </div>
+      </header>
+
+<section class="invoice-list">
+  <ul id="invoiceList">
+    <li class="invoice-item" data-status="paid">
+      <span>#RT3080</span>
+      <span>Due 19 Aug 2021</span>
+      <span>Jensen Huang</span>
+      <span>£1,800.90</span>
+      <span class="status paid">Paid</span>
+      <a href="invoice.html?id=RT3080" class="arrow-btn">→</a>
+    </li>
+    <li class="invoice-item" data-status="pending">
+      <span>#XM9141</span>
+      <span>Due 20 Sep 2021</span>
+      <span>Alex Grim</span>
+      <span>£556.00</span>
+      <span class="status pending">Pending</span>
+      <a href="invoice.html?id=XM9141" class="arrow-btn">→</a>
+    </li>
+    <li class="invoice-item" data-status="paid">
+      <span>#RG0314</span>
+      <span>Due 01 Oct 2021</span>
+      <span>John Morrison</span>
+      <span>£14,002.33</span>
+      <span class="status paid">Paid</span>
+      <a href="invoice.html?id=RG0314" class="arrow-btn">→</a>
+    </li>
+    <li class="invoice-item" data-status="pending">
+      <span>#RT2080</span>
+      <span>Due 12 Oct 2021</span>
+      <span>Alysa Werner</span>
+      <span>£102.04</span>
+      <span class="status pending">Pending</span>
+      <a href="invoice.html?id=RT2080" class="arrow-btn">→</a>
+    </li>
+    <li class="invoice-item" data-status="pending">
+      <span>#AA1449</span>
+      <span>Due 14 Oct 2021</span>
+      <span>Mellisa Clarke</span>
+      <span>£4,032.33</span>
+      <span class="status pending">Pending</span>
+      <a href="invoice.html?id=AA1449" class="arrow-btn">→</a>
+    </li>
+    <li class="invoice-item" data-status="pending">
+      <span>#TY9141</span>
+      <span>Due 31 Oct 2021</span>
+      <span>Thomas Wayne</span>
+      <span>£6,155.91</span>
+      <span class="status pending">Pending</span>
+      <a href="invoice.html?id=TY9141" class="arrow-btn">→</a>
+    </li>
+    <li class="invoice-item" data-status="draft">
+      <span>#FV2353</span>
+      <span>Due 12 Nov 2021</span>
+      <span>Anita Wainwright</span>
+      <span>£3,102.04</span>
+      <span class="status draft">Draft</span>
+      <a href="invoice.html?id=FV2353" class="arrow-btn">→</a>
+    </li>
+  </ul>
+</section>
+
+  
+  <!-- Empty state -->
+  <div id="emptyState" class="empty-state">
+    <img src="./assets/illustration-empty.svg" alt="No invoices" />
+    <h2>There is nothing here</h2>
+    <p>Create an invoice by clicking the <strong>New Invoice</strong> button above</p>
+  </div>
+</section>
+
+
+
+        <!-- Empty state -->
+        <div id="emptyState" class="empty-state">
+          <img src="./assets/illustration-empty.svg" alt="No invoices" />
+          <h2>There is nothing here</h2>
+          <p>Create an invoice by clicking the <strong>New Invoice</strong> button above</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+<!-- New Invoice Overlay -->
+<div id="newInvoiceOverlay" class="invoice-overlay">
+  <div class="invoice-form">
+    <h2>New Invoice</h2>
+
+    <h3>Bill From</h3>
+    <label>Street Address</label>
+    <input type="text" />
+
+    <div class="row">
+      <div class="form-group">
+        <label>City</label>
+        <input type="text" />
+      </div>
+      <div class="form-group">
+        <label>Post Code</label>
+        <input type="text" />
+      </div>
+      <div class="form-group">
+        <label>Country</label>
+        <input type="text" />
+      </div>
+    </div>
+    
+
+    <!-- Invoice Detail Overlay -->
+<div id="invoiceDetailOverlay" class="invoice-overlay">
+  <div class="invoice-form">
+    <h2>Invoice Details</h2>
+    <div id="invoiceDetailsContent">
+      <!-- Filled dynamically with JS -->
+      <p>Loading...</p>
+    </div>
+    <div class="form-actions">
+      <button id="closeDetailBtn">Close</button>
+    </div>
+  </div>
+</div>
+
+
+    <h3>Bill To</h3>
+    <label>Client’s Name</label>
+    <input type="text" />
+
+    <label>Client’s Email</label>
+    <input type="email" />
+
+    <label>Street Address</label>
+    <input type="text" />
+
+    <div class="row">
+      <div class="form-group">
+        <label>City</label>
+        <input type="text" />
+      </div>
+      <div class="form-group">
+        <label>Post Code</label>
+        <input type="text" />
+      </div>
+      <div class="form-group">
+        <label>Country</label>
+        <input type="text" />
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Invoice Date -->
+      <div class="form-group">
+        <label for="invoice-date">Invoice Date</label>
+        <div class="date-input-wrapper">
+          <input type="text" id="invoice-date" class="datepicker" placeholder="Select date" />
+          <img src="./assets/icon-calendar.svg" alt="calendar icon" class="calendar-icon" />
+        </div>
+      </div>
+
+      <!-- Payment Terms -->
+      <div class="form-group">
+        <label for="payment-terms">Payment Terms</label>
+        <div class="select-wrapper">
+          <select id="payment-terms">
+            <option value="1">Net 1 Day</option>
+            <option value="7">Net 7 Days</option>
+            <option value="14">Net 14 Days</option>
+            <option value="30">Net 30 Days</option>
+          </select>
+          <img src="./assets/icon-arrow-down.svg" alt="dropdown icon" class="dropdown-icon" />
+        </div>
+      </div>
+    </div> <!-- close row -->
+
+    <!-- Project Description -->
+    <div class="form-group">
+      <label for="project-description">Project Description</label>
+      <input type="text" id="project-description" placeholder="Enter project details" />
+    </div>
+
+<!-- Item List Section -->
+<section class="item-list" aria-label="Item list for billing">
+  <h3>Item List</h3>
+
+  <!-- Labels Row -->
+  <div class="labels-row">
+    <div>Item Name</div>
+    <div>Qty.</div>
+    <div>Price</div>
+    <div>Total</div>
+    <div></div>
+  </div>
+
+  <!-- Items Container -->
+  <div id="itemsContainer">
+    <div class="item-row">
+      <input type="text" class="item-name" value="Banner Design" />
+      <input type="number" class="item-qty" value="" min="1" />
+      <input type="number" class="item-price" value="" step="0.01" min="0" />
+      <div class="item-total">0.00</div>
+      <button class="delete-item" aria-label="Delete Item">
+        <img src="./assets/icon-delete.svg" alt="delete icon" />
+      </button>
+    </div>
+
+    <div class="item-row">
+      <input type="text" class="item-name" value="Email Design" />
+      <input type="number" class="item-qty" value="" min="1" />
+      <input type="number" class="item-price" value="" step="0.01" min="0" />
+      <div class="item-total">0.00</div>
+      <button class="delete-item" aria-label="Delete Item">
+        <img src="./assets/icon-delete.svg" alt="delete icon" />
+      </button>
+    </div>
+  </div>
+
+  <!-- Add item button -->
+  <button type="button" id="addItemBtn">+ Add New Item</button>
+</section>
+
+
+
+
+<!-- Form Actions -->
+<div class="form-actions">
+  <button id="discardBtn">Discard</button>
+  <div class="form-actions-right">
+    <button type="button">Save as Draft</button>
+    <button type="submit" class="primary">Save & Send</button>
+  </div>
+</div>
+
+
+
+
+
+  <script>
+  const toggleBtn = document.getElementById("themeToggle");
+  const themeIcon = document.getElementById("themeIcon");
+  const body = document.body;
+
+  // ===== Load Saved Theme =====
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark") {
+    body.classList.add("dark");
+    themeIcon.src = "./assets/icon-sun.svg";
+    themeIcon.alt = "Switch to Light Mode";
+  } else {
+    body.classList.remove("dark");
+    themeIcon.src = "./assets/icon-moon.svg";
+    themeIcon.alt = "Switch to Dark Mode";
+  }
+
+  // ===== Dark/Light Mode Toggle =====
+  toggleBtn.addEventListener("click", () => {
+    body.classList.toggle("dark");
+    if (body.classList.contains("dark")) {
+      localStorage.setItem("theme", "dark");
+      themeIcon.src = "./assets/icon-sun.svg";
+      themeIcon.alt = "Switch to Light Mode";
+    } else {
+      localStorage.setItem("theme", "light");
+      themeIcon.src = "./assets/icon-moon.svg";
+      themeIcon.alt = "Switch to Dark Mode";
+    }
+  });
+
+  const filter = document.querySelector('.filter');
+  const dropdown = document.getElementById('filterDropdown');
+  const arrow = document.querySelector('.arrow');
+  const invoiceList = document.getElementById("invoiceList");
+  const emptyState = document.getElementById("emptyState");
+
+  // ===== Dropdown Toggle =====
+  filter.addEventListener('click', () => {
+    const isOpen = dropdown.style.display === 'block';
+    dropdown.style.display = isOpen ? 'none' : 'block';
+    arrow.classList.toggle('open', !isOpen);
+  });
+
+  // ===== Dropdown Filter =====
+  dropdown.querySelectorAll('li').forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const status = item.dataset.status;
+
+      let visibleCount = 0;
+      document.querySelectorAll('.invoice-item').forEach(inv => {
+        if (status === "all" || inv.dataset.status === status) {
+          inv.style.display = "grid";
+          visibleCount++;
+        } else {
+          inv.style.display = "none";
+        }
+      });
+
+      emptyState.style.display = visibleCount === 0 ? "block" : "none";
+      dropdown.style.display = 'none';
+      arrow.classList.remove('open');
+    });
+  });
+
+  // ===== Close Dropdown on Outside Click =====
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.filter')) {
+      dropdown.style.display = 'none';
+      arrow.classList.remove('open');
+    }
+  });
+
+  // ===== New Invoice Overlay =====
+  const newInvoiceBtn = document.getElementById("newInvoiceBtn");
+  const overlay = document.getElementById("newInvoiceOverlay");
+  const discardBtn = document.getElementById("discardBtn");
+
+  newInvoiceBtn.addEventListener("click", () => {
+    overlay.style.display = "flex";
+    setTimeout(() => overlay.classList.add("active"), 10);
+  });
+
+  discardBtn.addEventListener("click", () => {
+    overlay.classList.remove("active");
+    setTimeout(() => (overlay.style.display = "none"), 300);
+  });
+
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) {
+      overlay.classList.remove("active");
+      setTimeout(() => (overlay.style.display = "none"), 300);
+    }
+  });
+
+  // ===== Date Picker (Flatpickr) =====
+  const dateInput = document.querySelector("#invoice-date");
+  const calendarIcon = document.querySelector(".calendar-icon");
+  const fp = flatpickr(dateInput, {
+    dateFormat: "d M Y",
+    altInput: true,
+    altFormat: "d M Y",
+  });
+  calendarIcon.addEventListener("click", () => {
+    fp.open();
+  });
+
+  // ===== Full Invoice Data (No fetch needed) =====
+  const invoices = [
+    {
+      "id": "RT3080",
+      "createdAt": "2021-08-18",
+      "paymentDue": "2021-08-19",
+      "description": "Re-branding",
+      "paymentTerms": 1,
+      "clientName": "Jensen Huang",
+      "clientEmail": "jensenh@mail.com",
+      "status": "paid",
+      "senderAddress": {
+        "street": "19 Union Terrace",
+        "city": "London",
+        "postCode": "E1 3EZ",
+        "country": "United Kingdom"
+      },
+      "clientAddress": {
+        "street": "106 Kendell Street",
+        "city": "Sharrington",
+        "postCode": "NR24 5WQ",
+        "country": "United Kingdom"
+      },
+      "items": [
+        { "name": "Brand Guidelines", "quantity": 1, "price": 1800.90, "total": 1800.90 }
+      ],
+      "total": 1800.90
+    },
+    {
+      "id": "XM9141",
+      "createdAt": "2021-08-21",
+      "paymentDue": "2021-09-20",
+      "description": "Graphic Design",
+      "paymentTerms": 30,
+      "clientName": "Alex Grim",
+      "clientEmail": "alexgrim@mail.com",
+      "status": "pending",
+      "senderAddress": {
+        "street": "19 Union Terrace",
+        "city": "London",
+        "postCode": "E1 3EZ",
+        "country": "United Kingdom"
+      },
+      "clientAddress": {
+        "street": "84 Church Way",
+        "city": "Bradford",
+        "postCode": "BD1 9PB",
+        "country": "United Kingdom"
+      },
+      "items": [
+        { "name": "Banner Design", "quantity": 1, "price": 156.00, "total": 156.00 },
+        { "name": "Email Design", "quantity": 2, "price": 200.00, "total": 400.00 }
+      ],
+      "total": 556.00
+    },
+    {
+      "id": "RG0314",
+      "createdAt": "2021-09-24",
+      "paymentDue": "2021-10-01",
+      "description": "Website Redesign",
+      "paymentTerms": 7,
+      "clientName": "John Morrison",
+      "clientEmail": "jm@myco.com",
+      "status": "paid",
+      "senderAddress": {
+        "street": "19 Union Terrace",
+        "city": "London",
+        "postCode": "E1 3EZ",
+        "country": "United Kingdom"
+      },
+      "clientAddress": {
+        "street": "79 Dover Road",
+        "city": "Westhall",
+        "postCode": "IP19 3PF",
+        "country": "United Kingdom"
+      },
+      "items": [
+        { "name": "Website Redesign", "quantity": 1, "price": 14002.33, "total": 14002.33 }
+      ],
+      "total": 14002.33
+    },
+    {
+      "id": "RT2080",
+      "createdAt": "2021-10-11",
+      "paymentDue": "2021-10-12",
+      "description": "Logo Concept",
+      "paymentTerms": 1,
+      "clientName": "Alysa Werner",
+      "clientEmail": "alysa@email.co.uk",
+      "status": "pending",
+      "senderAddress": {
+        "street": "19 Union Terrace",
+        "city": "London",
+        "postCode": "E1 3EZ",
+        "country": "United Kingdom"
+      },
+      "clientAddress": {
+        "street": "63 Warwick Road",
+        "city": "Carlisle",
+        "postCode": "CA20 2TG",
+        "country": "United Kingdom"
+      },
+      "items": [
+        { "name": "Logo Sketches", "quantity": 1, "price": 102.04, "total": 102.04 }
+      ],
+      "total": 102.04
+    },
+    {
+      "id": "AA1449",
+      "createdAt": "2021-10-7",
+      "paymentDue": "2021-10-14",
+      "description": "Re-branding",
+      "paymentTerms": 7,
+      "clientName": "Mellisa Clarke",
+      "clientEmail": "mellisa.clarke@example.com",
+      "status": "pending",
+      "senderAddress": {
+        "street": "19 Union Terrace",
+        "city": "London",
+        "postCode": "E1 3EZ",
+        "country": "United Kingdom"
+      },
+      "clientAddress": {
+        "street": "46 Abbey Row",
+        "city": "Cambridge",
+        "postCode": "CB5 6EG",
+        "country": "United Kingdom"
+      },
+      "items": [
+        { "name": "New Logo", "quantity": 1, "price": 1532.33, "total": 1532.33 },
+        { "name": "Brand Guidelines", "quantity": 1, "price": 2500.00, "total": 2500.00 }
+      ],
+      "total": 4032.33
+    },
+    {
+      "id": "TY9141",
+      "createdAt": "2021-10-01",
+      "paymentDue": "2021-10-31",
+      "description": "Landing Page Design",
+      "paymentTerms": 30,
+      "clientName": "Thomas Wayne",
+      "clientEmail": "thomas@dc.com",
+      "status": "pending",
+      "senderAddress": {
+        "street": "19 Union Terrace",
+        "city": "London",
+        "postCode": "E1 3EZ",
+        "country": "United Kingdom"
+      },
+      "clientAddress": {
+        "street": "3964  Queens Lane",
+        "city": "Gotham",
+        "postCode": "60457",
+        "country": "United States of America"
+      },
+      "items": [
+        { "name": "Web Design", "quantity": 1, "price": 6155.91, "total": 6155.91 }
+      ],
+      "total": 6155.91
+    },
+    {
+      "id": "FV2353",
+      "createdAt": "2021-11-05",
+      "paymentDue": "2021-11-12",
+      "description": "Logo Re-design",
+      "paymentTerms": 7,
+      "clientName": "Anita Wainwright",
+      "clientEmail": "",
+      "status": "draft",
+      "senderAddress": {
+        "street": "19 Union Terrace",
+        "city": "London",
+        "postCode": "E1 3EZ",
+        "country": "United Kingdom"
+      },
+      "clientAddress": {
+        "street": "",
+        "city": "",
+        "postCode": "",
+        "country": ""
+      },
+      "items": [
+        { "name": "Logo Re-design", "quantity": 1, "price": 3102.04, "total": 3102.04 }
+      ],
+      "total": 3102.04
+    }
+  ];
+
+  // ===== Render Invoices =====
+  function renderInvoices() {
+    const list = document.getElementById("invoiceList");
+    const empty = document.getElementById("emptyState");
+    const count = document.getElementById("invoice-count");
+
+    list.innerHTML = "";
+
+    if (!invoices.length) {
+      empty.style.display = "block";
+      count.textContent = "There are no invoices";
+      return;
+    }
+
+    empty.style.display = "none";
+    count.textContent = `There are ${invoices.length} total invoices`;
+
+    invoices.forEach(inv => {
+      const li = document.createElement("li");
+      li.className = "invoice-item";
+      li.dataset.status = inv.status;
+      li.innerHTML = `
+        <span>#${inv.id}</span>
+        <span>Due ${new Date(inv.paymentDue).toLocaleDateString("en-GB", {day: "2-digit", month: "short", year: "numeric"})}</span>
+        <span>${inv.clientName}</span>
+        <span>£${inv.total.toLocaleString("en-GB", {minimumFractionDigits: 2})}</span>
+        <span class="status ${inv.status}">${inv.status}</span>
+        <a href="invoice.html?id=${inv.id}" class="arrow-btn">→</a>
+      `;
+      list.appendChild(li);
+    });
+  }
+
+  // ✅ Call immediately
+  renderInvoices();
+</script>

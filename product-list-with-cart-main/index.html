@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+  <title>Frontend Mentor | Product list with cart</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Text:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-wrapper">
+  <main class="container">
+    <h1 class="page-title">Desserts</h1>
+    <div class="product-list-container">
+      <div class="dessert-grid">
+        <div class="dessert-card">
+          <div class="dessert-image-container">
+            <picture>
+              <source srcset="./assets/images/image-waffle-desktop.jpg" media="(min-width: 1440px)">
+              <source srcset="./assets/images/image-waffle-tablet.jpg" media="(min-width: 768px)">
+              <img src="./assets/images/image-waffle-thumbnail.jpg" alt="Waffle with Berries" class="dessert-image">
+            </picture>
+            <button class="add-to-cart-btn">
+              <img src="./assets/images/icon-add-to-cart.svg" alt="" aria-hidden="true">
+              Add to Cart
+            </button>
+          </div>
+          <p class="dessert-category">Waffle</p>
+          <h2 class="dessert-name">Waffle with Berries</h2>
+          <p class="dessert-price">$6.50</p>
+        </div>
+
+        <div class="dessert-card">
+          <div class="dessert-image-container">
+            <picture>
+              <source srcset="./assets/images/image-creme-brulee-desktop.jpg" media="(min-width: 1440px)">
+              <source srcset="./assets/images/image-creme-brulee-tablet.jpg" media="(min-width: 768px)">
+              <img src="./assets/images/image-creme-brulee-thumbnail.jpg" alt="Vanilla Bean Crème Brûlée" class="dessert-image">
+            </picture>
+            <button class="add-to-cart-btn">
+              <img src="./assets/images/icon-add-to-cart.svg" alt="" aria-hidden="true">
+              Add to Cart
+            </button>
+          </div>
+          <p class="dessert-category">Crème Brûlée</p>
+          <h2 class="dessert-name">Vanilla Bean Crème Brûlée</h2>
+          <p class="dessert-price">$7.00</p>
+        </div>
+
+        <div class="dessert-card">
+          <div class="dessert-image-container">
+            <picture>
+              <source srcset="./assets/images/image-macaron-desktop.jpg" media="(min-width: 1440px)">
+              <source srcset="./assets/images/image-macaron-tablet.jpg" media="(min-width: 768px)">
+              <img src="./assets/images/image-macaron-thumbnail.jpg" alt="Macaron Mix of Five" class="dessert-image">
+            </picture>
+            <button class="add-to-cart-btn">
+              <img src="./assets/images/icon-add-to-cart.svg" alt="" aria-hidden="true">
+              Add to Cart
+            </button>
+          </div>
+          <p class="dessert-category">Macaron</p>
+          <h2 class="dessert-name">Macaron Mix of Five</h2>
+          <p class="dessert-price">$8.00</p>
+        </div>
+
+        <div class="dessert-card">
+          <div class="dessert-image-container">
+            <picture>
+              <source srcset="./assets/images/image-tiramisu-desktop.jpg" media="(min-width: 1440px)">
+              <source srcset="./assets/images/image-tiramisu-tablet.jpg" media="(min-width: 768px)">
+              <img src="./assets/images/image-tiramisu-thumbnail.jpg" alt="Classic Tiramisu" class="dessert-image">
+            </picture>
+            <button class="add-to-cart-btn">
+              <img src="./assets/images/icon-add-to-cart.svg" alt="" aria-hidden="true">
+              Add to Cart
+            </button>
+          </div>
+          <p class="dessert-category">Tiramisu</p>
+          <h2 class="dessert-name">Classic Tiramisu</h2>
+          <p class="dessert-price">$5.50</p>
+        </div>
+
+        <div class="dessert-card">
+          <div class="dessert-image-container">
+            <picture>
+              <source srcset="./assets/images/image-baklava-desktop.jpg" media="(min-width: 1440px)">
+              <source srcset="./assets/images/image-baklava-tablet.jpg" media="(min-width: 768px)">
+              <img src="./assets/images/image-baklava-thumbnail.jpg" alt="Pistachio Baklava" class="dessert-image">
+            </picture>
+            <button class="add-to-cart-btn">
+              <img src="./assets/images/icon-add-to-cart.svg" alt="" aria-hidden="true">
+              Add to Cart
+            </button>
+          </div>
+          <p class="dessert-category">Baklava</p>
+          <h2 class="dessert-name">Pistachio Baklava</h2>
+          <p class="dessert-price">$4.00</p>
+        </div>
+
+        <div class="dessert-card">
+          <div class="dessert-image-container">
+            <picture>
+              <source srcset="./assets/images/image-meringue-desktop.jpg" media="(min-width: 1440px)">
+              <source srcset="./assets/images/image-meringue-tablet.jpg" media="(min-width: 768px)">
+              <img src="./assets/images/image-meringue-thumbnail.jpg" alt="Lemon Meringue Pie" class="dessert-image">
+            </picture>
+            <button class="add-to-cart-btn">
+              <img src="./assets/images/icon-add-to-cart.svg" alt="" aria-hidden="true">
+              Add to Cart
+            </button>
+          </div>
+          <p class="dessert-category">Pie</p>
+          <h2 class="dessert-name">Lemon Meringue Pie</h2>
+          <p class="dessert-price">$5.00</p>
+        </div>
+
+        <div class="dessert-card">
+          <div class="dessert-image-container">
+            <picture>
+              <source srcset="./assets/images/image-cake-desktop.jpg" media="(min-width: 1440px)">
+              <source srcset="./assets/images/image-cake-tablet.jpg" media="(min-width: 768px)">
+              <img src="./assets/images/image-cake-thumbnail.jpg" alt="Red Velvet Cake" class="dessert-image">
+            </picture>
+            <button class="add-to-cart-btn">
+              <img src="./assets/images/icon-add-to-cart.svg" alt="" aria-hidden="true">
+              Add to Cart
+            </button>
+          </div>
+          <p class="dessert-category">Cake</p>
+          <h2 class="dessert-name">Red Velvet Cake</h2>
+          <p class="dessert-price">$4.50</p>
+        </div>
+
+        <div class="dessert-card">
+          <div class="dessert-image-container">
+            <picture>
+              <source srcset="./assets/images/image-brownie-desktop.jpg" media="(min-width: 1440px)">
+              <source srcset="./assets/images/image-brownie-tablet.jpg" media="(min-width: 768px)">
+              <img src="./assets/images/image-brownie-thumbnail.jpg" alt="Salted Caramel Brownie" class="dessert-image">
+            </picture>
+            <button class="add-to-cart-btn">
+              <img src="./assets/images/icon-add-to-cart.svg" alt="" aria-hidden="true">
+              Add to Cart
+            </button>
+          </div>
+          <p class="dessert-category">Brownie</p>
+          <h2 class="dessert-name">Salted Caramel Brownie</h2>
+          <p class="dessert-price">$4.50</p>
+        </div>
+
+        <div class="dessert-card">
+          <div class="dessert-image-container">
+            <picture>
+              <source srcset="./assets/images/image-panna-cotta-desktop.jpg" media="(min-width: 1440px)">
+              <source srcset="./assets/images/image-panna-cotta-tablet.jpg" media="(min-width: 768px)">
+              <img src="./assets/images/image-panna-cotta-thumbnail.jpg" alt="Vanilla Panna Cotta" class="dessert-image">
+            </picture>
+            <button class="add-to-cart-btn">
+              <img src="./assets/images/icon-add-to-cart.svg" alt="" aria-hidden="true">
+              Add to Cart
+            </button>
+          </div>
+          <p class="dessert-category">Panna Cotta</p>
+          <h2 class="dessert-name">Vanilla Panna Cotta</h2>
+          <p class="dessert-price">$6.50</p>
+        </div>
+      </div>
+    </div>
+
+<div id="order-modal" class="modal hidden">
+  <div class="modal-content">
+    <img src="./assets/images/icon-order-confirmed.svg" alt="Order Confirmed Icon" class="order-confirmed-icon" />
+
+    <div class="modal-header-text">
+      <h2>Order Confirmed</h2>
+      <p>We hope you enjoy your dessert!</p>
+    </div>
+
+    <ul id="confirmed-items-list"></ul>
+
+    <div class="modal-total">
+      <span>Order Total</span>
+      <strong id="modal-total-amount">$0.00</strong>
+    </div>
+
+    <button id="new-order-btn" class="confirm-btn">Start New Order</button>
+  </div>
+</div>
+
+
+
+
+
+  </main>
+  <div class="cart-container">
+      <h2 class="cart-title">Your Cart (<span class="cart-quantity">0</span>)</h2>
+      <div class="cart-content">
+        <img id="empty-cart-image" src="./assets/images/illustration-empty-cart.svg" alt="Empty cart" />
+        <p class="empty-cart-message">Your added items will appear here</p>
+
+         <!-- Populated cart items go here -->
+<!-- Cart Summary Section -->
+<div id="cart-summary" class="cart-content" style="display: none;">
+  <ul class="cart-items">
+    <!-- JS will inject items here -->
+  </ul>
+
+  <div class="order-total-section">
+    <p class="order-total-text">Order Total</p>
+    <p class="order-total-amount">$0.00</p>
+  </div>
+
+  <div class="carbon-neutral-box">
+    <img src="./assets/images/icon-carbon-neutral.svg" alt="Carbon neutral" class="carbon-icon">
+    <span>This is a <strong>carbon-neutral</strong> delivery</span>
+  </div>
+
+  <button id="confirm-button" class="confirm-btn">Confirm Order</button>
+
+</div>
+
+
+      <div class="attribution">
+        Challenge by <a href="https://www.frontendmentor.io?ref=challenge">FrontEndMentor</a>. 
+        Coded by <a href="#"> Folakemi Tedlance</a>.
+      </div>
+  </div>
+
+  </div>
+
+  </div>
+
+ 
+  <script src="app.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const modal = document.getElementById("order-modal");
+    const newOrderBtn = document.getElementById("new-order-btn");
+
+    if (newOrderBtn) {
+      newOrderBtn.addEventListener("click", () => {
+        // Clear modal content
+        document.getElementById("confirmed-items-list").innerHTML = "";
+        document.getElementById("modal-total-amount").textContent = "$0.00";
+
+        // Hide modal
+        modal.classList.add("hidden");
+
+        // Reload the page to reset cart and UI
+        setTimeout(() => {
+          location.reload();
+        }, 300); // slight delay for smoother UX
+      });
+    }
+  });
+</script>
+
+
+
+</body>
+</html>

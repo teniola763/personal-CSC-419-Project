@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Rock Paper Scissors</title>
+
+<style>
+body {
+    background: #1F2F56;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    background: #2A4066;
+    padding: 1rem 1.5rem;
+    width: 300px;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+}
+header .title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    line-height: 1.2;
+    text-transform: uppercase;
+    color: white;
+}
+header .scoreboard {
+    background: white;
+    border-radius: 5px;
+    width: 60px;
+    text-align: center;
+    color: #2a3950;
+    padding: 0.3rem 0;
+}
+header .scoreboard .score-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #5664b6;
+}
+header .scoreboard .score-number {
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+/* === Choices layout (gameboard) === */
+.choices {
+    position: relative;
+    width: 300px;
+    height: 250px;
+}
+.choices .choice {
+    background: white;
+    border-radius: 50%;
+    width: 90px;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border: 10px solid;
+    transition: transform 0.2s ease;
+    z-index: 1;
+    position: absolute;
+}
+.choices .choice:hover {
+    transform: scale(1.1);
+}
+.choices .choice img {
+    width: 45px;
+    height: 45px;
+}
+.choices .choice.paper {
+    border-color: #4865F4;
+    top: 20px;
+    left: 20px;
+}
+.choices .choice.scissors {
+    border-color: #DB7C1F;
+    top: 20px;
+    right: 20px;
+}
+.choices .choice.rock {
+    border-color: #DC2E4E;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Triangle outline */
+.triangle-lines {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 180px;
+    z-index: 0;
+}
+.triangle-lines polygon {
+    stroke: #2A4066;
+    stroke-width: 10;
+    fill: none;
+    opacity: 0.6;
+}
+
+/* === Bonus pentagon mode === */
+.bonus .choices {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  margin: 0 auto;
+}
+
+/* Keep shapes perfectly circular */
+.bonus .choice {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  transform: translate(-50%, -50%); /* keeps them centered */
+  border: 10px solid;
+  transition: transform 0.2s ease;
+}
+
+/* Fix hover so they don’t shake */
+.bonus .choice:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+  z-index: 2; /* bring above others */
+}
+
+/* Pentagon corners (adjusted rock placement) */
+.bonus .choice.scissors { top: 20px; left: 50%; border-color: #DB7C1F; }
+.bonus .choice.paper    { top: 110px; left: 290px; border-color: #4865F4; }
+.bonus .choice.rock     { top: 280px; left: 210px; border-color: #DC2E4E; }
+.bonus .choice.lizard   { top: 280px; left: 90px; border-color: #4CAF50; }
+.bonus .choice.spock    { top: 110px; left: 30px; border-color: #9C27B0; }
+
+
+/* Pentagon outline */
+.pentagon-lines {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 320px;
+    height: 320px;
+    z-index: 0;
+    opacity: 0.5;
+}
+.pentagon-lines polygon {
+    stroke: #2A4066;
+    stroke-width: 10;
+    fill: none;
+    opacity: 0.6;
+}
+
+/* === Result Section === */
+.result {
+    display: none;
+    width: 100%;
+    max-width: 900px;
+    color: white;
+    text-align: center;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+    gap: 3rem;
+}
+.result .picked {
+    flex: 1;
+    text-align: center;
+}
+.result .picked h3 {
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 2px;
+    font-size: 1rem;
+}
+/* Make result circles perfectly round with glow */
+.result .picked .choice {
+    width: 180px;
+    height: 180px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    background: white;
+    border: 15px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    flex-shrink: 0;
+}
+/* Glow per type */
+.result .picked .choice.paper {
+    border-color: #4865F4;
+    box-shadow: 0 0 0 20px rgba(72, 101, 244, 0.5);
+}
+.result .picked .choice.scissors {
+    border-color: #DB7C1F;
+    box-shadow: 0 0 0 20px rgba(219, 124, 31, 0.5);
+}
+.result .picked .choice.rock {
+    border-color: #DC2E4E;
+    box-shadow: 0 0 0 20px rgba(220, 46, 78, 0.5);
+}
+.result .picked .choice.spock {
+    border-color: #9C27B0;
+    box-shadow: 0 0 0 20px rgba(156, 39, 176, 0.5);
+}
+.result .picked .choice.lizard {
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 20px rgba(76, 175, 80, 0.5);
+}
+.result .picked .choice img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+/* Middle outcome area */
+.result .outcome-area {
+    flex: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+.result .outcome {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 0;
+}
+.btn-play-again {
+    background: white;
+    border: none;
+    color: #25273c;
+    padding: 0.8rem 2.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background 0.2s ease;
+}
+.btn-play-again:hover {
+    background: #e5e5e5;
+}
+
+/* Rules button */
+.rules-btn {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    background: #25273c;
+    border: 2px solid white;
+    color: white;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+}
+.rules-btn:hover {
+    background: #3a4470;
+    transform: scale(1.1);
+    border-color: #ffd700;
+}
+
+/* Mode toggle button */
+#mode-toggle {
+    position: fixed;
+    bottom: 1rem;
+    left: 1rem;
+    background: #25273c;
+    border: 2px solid white;
+    color: white;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: transform 0.2s ease, background 0.2s ease;
+    z-index: 1000;
+}
+#mode-toggle:hover {
+    background: #394168;
+    transform: scale(1.1);
+}
+
+/* Rules modal */
+.rules-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.rules-content {
+    background: white;
+    color: #2a3950;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+}
+.rules-content h2 {
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+.rules-content img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
+}
+#close-rules {
+    background: #25273c;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+}
+#close-rules:hover {
+    background: #3a4470;
+}
+/* Rock default */
+.bonus .choice.rock {
+  top: 240px;
+  left: 210px;
+  border-color: #DC2E4E;
+  transform: translateX(-50%);
+}
+
+/* Rock hover */
+.bonus .choice.rock:hover {
+  transform: translateX(-50%) scale(1.1);
+}
+
+/* ===== Mobile Mode ===== */
+@media (max-width: 768px) {
+  body {
+    padding: 1rem;
+    justify-content: flex-start;
+  }
+
+  header {
+    width: 100%;
+    max-width: 320px;
+    padding: 0.8rem 1rem;
+  }
+
+  .choices {
+    width: 220px;
+    height: 200px;
+    margin: 0 auto;
+  }
+  .choices .choice {
+    width: 70px;
+    height: 70px;
+    border-width: 8px;
+  }
+  .choices .choice img {
+    width: 35px;
+    height: 35px;
+  }
+  .triangle-lines {
+    width: 150px;
+    height: 140px;
+  }
+
+  /* Bonus mode mobile */
+  .bonus .choices {
+    width: 260px;
+    height: 260px;
+  }
+  .bonus .choice {
+    width: 70px;
+    height: 70px;
+    border-width: 8px;
+  }
+  .bonus .choice img {
+    width: 35px;
+    height: 35px;
+  }
+  .pentagon-lines {
+    width: 260px;
+    height: 260px;
+  }
+
+  /* Result section stacks vertically */
+  .result {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .result .picked .choice {
+    width: 120px;
+    height: 120px;
+    border-width: 10px;
+  }
+  .result .picked .choice img {
+    width: 60px;
+    height: 60px;
+  }
+  .result .outcome {
+    font-size: 1.8rem;
+  }
+  .btn-play-again {
+    padding: 0.6rem 2rem;
+    font-size: 0.9rem;
+  }
+
+  /* Buttons repositioned */
+  .rules-btn {
+    bottom: 0.5rem;
+    right: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.7rem;
+  }
+  #mode-toggle {
+    bottom: 0.5rem;
+    left: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.7rem;
+  }
+
+  /* Rules modal smaller */
+  .rules-content {
+    padding: 1rem;
+    max-width: 90%;
+  }
+}
+
+
+</style>
+
+</head>
+<body>
+<header>
+<div class="title">ROCK<br>PAPER<br>SCISSORS</div>
+<div class="scoreboard">
+<div class="score-label">SCORE</div>
+<div class="score-number" id="score">0</div>
+</div>
+</header>
+<!-- Game Boards -->
+<div id="game-choices" aria-label="Game Choices">
+<!-- Classic Triangle -->
+<div id="classic-layout" class="layout" aria-live="polite">
+<div class="choices" role="list">
+<svg class="triangle-lines" viewBox="0 0 200 180" aria-hidden="true">
+<polygon points="100,150 30,40 170,40" />
+</svg>
+<div class="choice paper" data-choice="paper" title="Paper" aria-label="Paper" role="listitem" tabindex="0">
+<img src="./images/icon-paper.svg" alt="Paper" />
+</div>
+<div class="choice scissors" data-choice="scissors" title="Scissors" aria-label="Scissors" role="listitem" tabindex="0">
+<img src="./images/icon-scissors.svg" alt="Scissors" />
+</div>
+<div class="choice rock" data-choice="rock" title="Rock" aria-label="Rock" role="listitem" tabindex="0">
+<img src="./images/icon-rock.svg" alt="Rock" />
+</div>
+</div>
+</div>
+<!-- Bonus Pentagon -->
+<div id="bonus-layout" class="layout" style="display:none;" aria-live="polite">
+<div class="choices bonus" role="list">
+<svg class="pentagon-lines" viewBox="0 0 220 220" aria-hidden="true">
+<polygon points="110,10 210,80 175,200 45,200 10,80" />
+</svg>
+<div class="choice rock" data-choice="rock" role="listitem" tabindex="0"><img src="./images/icon-rock.svg" alt="Rock"></div>
+<div class="choice paper" data-choice="paper" role="listitem" tabindex="0"><img src="./images/icon-paper.svg" alt="Paper"></div>
+<div class="choice scissors" data-choice="scissors" role="listitem" tabindex="0"><img src="./images/icon-scissors.svg" alt="Scissors"></div>
+<div class="choice lizard" data-choice="lizard" role="listitem" tabindex="0"><img src="./images/icon-lizard.svg" alt="Lizard"></div>
+<div class="choice spock" data-choice="spock" role="listitem" tabindex="0"><img src="./images/icon-spock.svg" alt="Spock"></div>
+</div>
+</div>
+<!-- Result Section -->
+<div class="result" id="result-section" role="region" aria-live="assertive" aria-atomic="true" tabindex="0">
+<div class="picked">
+<h3>YOU PICKED</h3>
+<div class="choice" id="user-choice" aria-label="Your choice"></div>
+</div>
+<div class="outcome-area">
+<div class="outcome" id="result-text">YOU WIN</div>
+<button class="btn-play-again" id="play-again" aria-label="Play again">PLAY AGAIN</button>
+</div>
+<div class="picked">
+<h3>THE HOUSE PICKED</h3>
+<div class="choice" id="house-choice" aria-label="House choice"></div>
+</div>
+</div>
+<!-- Buttons -->
+<button class="rules-btn" aria-haspopup="dialog" aria-controls="rules-modal">RULES</button>
+<button id="mode-toggle" aria-pressed="false">MODE: CLASSIC</button>
+<!-- Rules Modal -->
+<div class="rules-modal" id="rules-modal" role="dialog" aria-modal="true" aria-labelledby="rules-title" tabindex="-1">
+<div class="rules-content">
+<h2 id="rules-title">Rules</h2>
+<div class="rules-images" id="rules-images"></div>
+<button id="close-rules" aria-label="Close rules dialog">Close</button>
+</div>
+</div>
+<script>
+let mode = "classic";
+let choices = ['rock', 'paper', 'scissors'];
+const scoreEl = document.getElementById('score');
+const resultSection = document.getElementById('result-section');
+const classicLayout = document.getElementById('classic-layout');
+const bonusLayout = document.getElementById('bonus-layout');
+const userChoiceDiv = document.getElementById('user-choice');
+const houseChoiceDiv = document.getElementById('house-choice');
+const resultText = document.getElementById('result-text');
+const playAgainBtn = document.getElementById('play-again');
+const modeToggle = document.getElementById('mode-toggle');
+const rulesImages = document.getElementById('rules-images');
+const rulesModal = document.getElementById('rules-modal');
+const rulesBtn = document.querySelector('.rules-btn');
+const closeRules = document.getElementById('close-rules');
+
+let score = 0;
+
+const icons = {
+    rock: "./images/icon-rock.svg",
+    paper: "./images/icon-paper.svg",
+    scissors: "./images/icon-scissors.svg",
+    lizard: "./images/icon-lizard.svg",
+    spock: "./images/icon-spock.svg"
+};
+
+const rulesImagesSrc = {
+    classic: "./images/image-rules.svg",
+    bonus: "./images/image-rules-bonus.svg"
+};
+
+function createChoiceElement(choice) {
+    const div = document.createElement('div');
+    div.classList.add('choice', choice);
+    div.setAttribute('aria-label', choice.charAt(0).toUpperCase() + choice.slice(1));
+    const img = document.createElement('img');
+    img.src = icons[choice];
+    img.alt = choice.charAt(0).toUpperCase() + choice.slice(1);
+    div.appendChild(img);
+    return div;
+}
+
+function determineWinner(user, house) {
+    if(user === house) return 'DRAW';
+    if(mode === "classic") {
+        if(
+            (user === 'rock' && house === 'scissors') ||
+            (user === 'paper' && house === 'rock') ||
+            (user === 'scissors' && house === 'paper')
+        ) return 'YOU WIN';
+    } else {
+        if(
+            (user === 'scissors' && (house === 'paper' || house === 'lizard')) ||
+            (user === 'paper' && (house === 'rock' || house === 'spock')) ||
+            (user === 'rock' && (house === 'lizard' || house === 'scissors')) ||
+            (user === 'lizard' && (house === 'spock' || house === 'paper')) ||
+            (user === 'spock' && (house === 'scissors' || house === 'rock'))
+        ) return 'YOU WIN';
+    }
+    return 'YOU LOSE';
+}
+
+function playRound(userChoice) {
+    const houseChoice = choices[Math.floor(Math.random() * choices.length)];
+
+    // Hide layouts, show result
+    classicLayout.style.display = 'none';
+    bonusLayout.style.display = 'none';
+    resultSection.style.display = 'flex';
+
+    // Show user choice
+    userChoiceDiv.innerHTML = '';
+    userChoiceDiv.appendChild(createChoiceElement(userChoice));
+
+    // Show house choice
+    houseChoiceDiv.innerHTML = '';
+    houseChoiceDiv.appendChild(createChoiceElement(houseChoice));
+
+    // Determine outcome
+    let outcome = determineWinner(userChoice, houseChoice);
+    
+    if(outcome === 'YOU WIN') {
+        score++;
+    } else if(outcome === 'YOU LOSE' && score > 0) {
+        score--;
+    }
+
+    scoreEl.textContent = score;
+    resultText.textContent = outcome;
+
+    // Set focus for accessibility on resultSection so screen readers announce outcome
+    resultSection.focus();
+}
+
+// Listen for clicks on choices
+document.getElementById('game-choices').addEventListener('click', e => {
+    const choiceDiv = e.target.closest('.choice');
+    if(choiceDiv && choiceDiv.dataset.choice) {
+        playRound(choiceDiv.dataset.choice);
+    }
+});
+
+// Keyboard support for choices (Enter or Space)
+document.getElementById('game-choices').addEventListener('keydown', e => {
+    if(e.key === 'Enter' || e.key === ' ') {
+        const choiceDiv = e.target.closest('.choice');
+        if(choiceDiv && choiceDiv.dataset.choice) {
+            playRound(choiceDiv.dataset.choice);
+        }
+    }
+});
+
+// Play again button resets to initial layout and hides result
+playAgainBtn.addEventListener('click', () => {
+    resultSection.style.display = 'none';
+    if(mode === "classic") {
+        classicLayout.style.display = 'block';
+    } else {
+        bonusLayout.style.display = 'block';
+    }
+    modeToggle.focus();
+});
+
+// Toggle mode button handler
+modeToggle.addEventListener('click', () => {
+    if(mode === "classic") {
+        mode = "bonus";
+        modeToggle.textContent = "MODE: BONUS";
+        modeToggle.setAttribute('aria-pressed', 'true');
+        choices = ['rock', 'paper', 'scissors', 'lizard', 'spock'];
+        classicLayout.style.display = 'none';
+        bonusLayout.style.display = 'block';
+        resultSection.style.display = 'none';
+    } else {
+        mode = "classic";
+        modeToggle.textContent = "MODE: CLASSIC";
+        modeToggle.setAttribute('aria-pressed', 'false');
+        choices = ['rock', 'paper', 'scissors'];
+        bonusLayout.style.display = 'none';
+        classicLayout.style.display = 'block';
+        resultSection.style.display = 'none';
+    }
+
+    // Clear any result to start fresh on mode change
+    userChoiceDiv.innerHTML = '';
+    houseChoiceDiv.innerHTML = '';
+    resultText.textContent = '';
+});
+
+// Rules modal open
+rulesBtn.addEventListener('click', () => {
+    rulesModal.style.display = 'flex';
+    rulesImages.innerHTML = '';
+    const img = document.createElement('img');
+    img.src = rulesImagesSrc[mode];
+    img.alt = `${mode.charAt(0).toUpperCase() + mode.slice(1)} Rules`;
+    rulesImages.appendChild(img);
+    rulesModal.focus();
+});
+
+// Rules modal close button
+closeRules.addEventListener('click', () => {
+    rulesModal.style.display = 'none';
+    rulesImages.innerHTML = '';
+    rulesBtn.focus();
+});
+
+// Close modal when clicking outside modal content
+rulesModal.addEventListener('click', e => {
+    if(e.target === rulesModal) {
+        rulesModal.style.display = 'none';
+        rulesImages.innerHTML = '';
+        rulesBtn.focus();
+    }
+});
+
+// Keyboard: Close modal on Escape key
+document.addEventListener('keydown', e => {
+    if(e.key === 'Escape' && rulesModal.style.display === 'flex') {
+        rulesModal.style.display = 'none';
+        rulesImages.innerHTML = '';
+        rulesBtn.focus();
+    }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teniola Tedlance | Frontend Developer Portfolio</title>
+  <meta name="description" content="Portfolio of Teniola Tedlance, a Frontend Developer specializing in inclusive web apps like the Virtual Hairstyle Gallery.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">
+        <h1>Teniola Oluwafolakemi Tedlance</h1>
+      </div>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><button id="theme-toggle" aria-label="Toggle dark mode">☀️</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="hero">
+      <h2>Frontend Developer Student</h2>
+      <p>Building interactive web experiences with HTML, CSS & JavaScript</p>
+      <a href="#projects" class="cta-btn">View My Work</a>
+    </section>
+
+    <section id="about">
+      <h2>About Me</h2>
+      <div class="about-content">
+        <p>Hi! I'm Teniola Tedlance, a final-year student passionate about web development. I love creating user-friendly, responsive applications that solve real problems.</p>
+        <p><strong>What I Do:</strong> I specialize in building inclusive web applications that celebrate diversity, with a focus on creating tools for underrepresented communities.</p>
+        <p><strong>Interests:</strong> Frontend UI/UX, JavaScript interactivity, inclusive apps for diverse users, and making technology accessible to everyone.</p>
+        <p><strong>Technical Skills:</strong> HTML5, CSS3, JavaScript (ES6+), Responsive Design, DOM Manipulation, CSS Grid & Flexbox</p>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2>Featured Projects</h2>
+      
+      <div class="project-showcase">
+        <div class="project-card featured">
+          <!-- Using YOUR braid image instead of placeholder -->
+          <img src="images/braids/braid1.jpg" alt="Virtual Hairstyle Gallery - Eviedoesla Braids Example">
+          <div class="card-content">
+            <h3>Virtual Hairstyle Gallery</h3>
+            <p>A comprehensive hairstyle gallery web application designed specifically for Black women showcasing 62 different protective styles, braids, locs, wigs, dyed hair, pixies, and sew-ins across 6 major categories. This app provides detailed information about each style with professional presentations and easy navigation.</p>
+            <p><strong>Problem Solved:</strong> Provides organized inspiration and detailed information about various Black hairstyles in one beautiful, accessible platform.</p>
+            <p><strong>Tech Stack:</strong> HTML5, CSS3, JavaScript ES6+, Responsive Design, CSS Grid & Flexbox</p>
+            
+            <div class="filter-container">
+              <button class="filter-btn active" data-category="all">All Categories</button>
+              <button class="filter-btn" data-category="braids">Braids (8)</button>
+              <button class="filter-btn" data-category="pixies">Pixies (13)</button>
+              <button class="filter-btn" data-category="wigs">Wigs (11)</button>
+              <button class="filter-btn" data-category="dyed hair">Dyed (11)</button>
+              <button class="filter-btn" data-category="locs">Locs (11)</button>
+              <button class="filter-btn" data-category="sew ins">Sew-Ins (8)</button>
+            </div>
+
+            <p style="text-align: center; font-size: 1.1rem; margin: 20px 0; color: var(--text);">
+              <strong>Click on any category below to explore detailed hairstyle pages:</strong>
+            </p>
+
+            <div class="gallery">
+              <!-- JavaScript will populate this with your 6 clickable category cards -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h2 style="text-align: center; margin-top: 60px; margin-bottom: 40px;">Additional Projects</h2>
+      
+      <div class="project-grid">
+        <!-- Project 1: Invoice Generator -->
+        <div class="project-card">
+          <div class="project-image">
+            <img src="screenshots/invoice-app.png" alt="Invoice Generator App Screenshot" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px 8px 0 0;">
+          </div>
+          <div class="project-content" style="padding: 20px;">
+            <h3>Invoice Generator App</h3>
+            <p style="margin: 15px 0; color: var(--text); line-height: 1.6;">Professional invoice creation tool with form validation and dynamic invoice generation. Users can create, customize, and generate professional invoices instantly.</p>
+            
+            <div style="margin: 20px 0;">
+              <p style="font-weight: 600; margin-bottom: 10px; color: var(--text);">🛠️ Tech Stack:</p>
+              <p class="tech-stack">
+                <span>HTML5</span> 
+                <span>CSS3</span> 
+                <span>JavaScript</span> 
+                <span>Form Validation</span>
+              </p>
+            </div>
+            
+            <div style="margin: 20px 0;">
+              <p style="font-weight: 600; margin-bottom: 8px; color: var(--text);">✨ Features:</p>
+              <ul style="margin-left: 20px; color: var(--text); line-height: 1.8;">
+                <li>Dynamic form fields</li>
+                <li>Real-time calculations</li>
+                <li>Professional layouts</li>
+                <li>Input validation</li>
+              </ul>
+            </div>
+            
+            <a href="invoice-app/starter-code/index.html" class="btn-sm" target="_blank" style="display: inline-block; margin-top: 15px;">View Project →</a>
+          </div>
+        </div>
+
+        <!-- Project 2: Shopping Cart -->
+        <div class="project-card">
+          <div class="project-image">
+            <img src="screenshots/product-cart.png" alt="Product List with Cart Screenshot" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px 8px 0 0;">
+          </div>
+          <div class="project-content" style="padding: 20px;">
+            <h3>Product List with Cart</h3>
+            <p style="margin: 15px 0; color: var(--text); line-height: 1.6;">Interactive e-commerce shopping cart with add/remove functionality, real-time total calculation, and responsive design for seamless shopping experience.</p>
+            
+            <div style="margin: 20px 0;">
+              <p style="font-weight: 600; margin-bottom: 10px; color: var(--text);">🛠️ Tech Stack:</p>
+              <p class="tech-stack">
+                <span>HTML5</span> 
+                <span>CSS3</span> 
+                <span>JavaScript</span> 
+                <span>DOM Manipulation</span>
+              </p>
+            </div>
+            
+            <div style="margin: 20px 0;">
+              <p style="font-weight: 600; margin-bottom: 8px; color: var(--text);">✨ Features:</p>
+              <ul style="margin-left: 20px; color: var(--text); line-height: 1.8;">
+                <li>Add/remove items</li>
+                <li>Quantity adjustments</li>
+                <li>Real-time totals</li>
+                <li>Responsive design</li>
+              </ul>
+            </div>
+            
+            <a href="product-list-with-cart-main/index.html" class="btn-sm" target="_blank" style="display: inline-block; margin-top: 15px; margin-right: 10px;">View Project →</a>
+            <a href="product-detail.html" class="btn-sm" style="display: inline-block; margin-top: 15px; background: var(--soft-pink);">Dedicated Page →</a>
+          </div>
+        </div>
+
+        <!-- Project 3: Rock Paper Scissors -->
+        <div class="project-card">
+          <div class="project-image">
+            <img src="screenshots/rock-paper-scissors.png" alt="Rock Paper Scissors Game Screenshot" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px 8px 0 0;">
+          </div>
+          <div class="project-content" style="padding: 20px;">
+            <h3>Rock Paper Scissors Game</h3>
+            <p style="margin: 15px 0; color: var(--text); line-height: 1.6;">Classic game implementation with smooth animations, score tracking, and interactive gameplay against computer AI with random selection logic.</p>
+            
+            <div style="margin: 20px 0;">
+              <p style="font-weight: 600; margin-bottom: 10px; color: var(--text);">🛠️ Tech Stack:</p>
+              <p class="tech-stack">
+                <span>HTML5</span> 
+                <span>CSS3</span> 
+                <span>JavaScript</span> 
+                <span>Game Logic</span>
+              </p>
+            </div>
+            
+            <div style="margin: 20px 0;">
+              <p style="font-weight: 600; margin-bottom: 8px; color: var(--text);">✨ Features:</p>
+              <ul style="margin-left: 20px; color: var(--text); line-height: 1.8;">
+                <li>Player vs Computer</li>
+                <li>Score tracking</li>
+                <li>Smooth animations</li>
+                <li>Game state management</li>
+              </ul>
+            </div>
+            
+            <a href="rock-paper-scissors-master/index.html" class="btn-sm" target="_blank" style="display: inline-block; margin-top: 15px;">Play Game →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2>Get In Touch</h2>
+      <p>Interested in collaborating or hiring?</p>
+      <div class="contact-links">
+        <a href="/cdn-cgi/l/email-protection#791f0d1c1d1518171a1c391e14181015571a1614" class="cta-btn">Email Me</a>
+        <a href="https://wa.me/2347015916858" class="cta-btn">WhatsApp</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Teniola Tedlance • Matric No: 2212031603051</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>  </script>
+</body>
+</html>

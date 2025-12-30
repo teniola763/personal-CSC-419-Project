@@ -1,0 +1,280 @@
+/* Wigs Detail Page Specific Styles */
+
+#detail-hero {
+  background: linear-gradient(135deg, var(--soft-pink), var(--accent));
+  padding: 100px 20px;
+  text-align: center;
+  min-height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#detail-hero h2 {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  color: white;
+}
+
+#detail-hero p {
+  font-size: 1.3rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+
+/* Overview Section */
+#overview {
+  background: var(--bg);
+}
+
+.overview-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.overview-text h3 {
+  color: var(--accent);
+  margin: 30px 0 15px;
+  font-size: 1.8rem;
+}
+
+.overview-text p {
+  line-height: 1.8;
+  margin-bottom: 20px;
+  font-size: 1.05rem;
+}
+
+.overview-image img {
+  width: 100%;
+  border-radius: 20px;
+  border: 5px solid var(--accent);
+}
+
+/* Features Grid */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.feature-card {
+  background: var(--card-bg);
+  padding: 30px;
+  border-radius: 20px;
+  border: 3px solid var(--border);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+}
+
+.feature-icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+}
+
+.feature-card h3 {
+  color: var(--accent);
+  margin-bottom: 12px;
+  font-size: 1.4rem;
+}
+
+.feature-card p {
+  line-height: 1.6;
+}
+
+/* Styles Showcase */
+#styles-showcase {
+  background: var(--card-bg);
+}
+
+.section-subtitle {
+  text-align: center;
+  color: var(--text);
+  opacity: 0.8;
+  margin-bottom: 50px;
+  font-size: 1.1rem;
+}
+
+.styles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 40px;
+  margin-top: 40px;
+}
+
+.style-detail {
+  background: var(--bg);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 3px solid var(--border);
+  transition: transform 0.3s ease;
+}
+
+.style-detail:hover {
+  transform: scale(1.02);
+}
+
+/* ✅ Wig images – NO ZOOM */
+.style-detail img {
+  width: 100%;
+  height: 350px;
+  object-fit: contain;
+  background-color: #1e1020;
+  display: block;
+}
+
+.style-info {
+  padding: 25px;
+}
+
+.style-info h3 {
+  color: var(--accent);
+  font-size: 1.6rem;
+  margin-bottom: 15px;
+}
+
+.style-meta {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.meta-tag {
+  background: var(--accent);
+  color: white;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Screenshots Section */
+#screenshots {
+  background: var(--bg);
+}
+
+.screenshots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.screenshot {
+  background: var(--card-bg);
+  border-radius: 15px;
+  overflow: hidden;
+  border: 3px solid var(--border);
+}
+
+/* ✅ App screenshots – NO ZOOM */
+.screenshot img {
+  width: 100%;
+  height: 250px;
+  object-fit: contain;
+  background-color: #1e1020;
+  display: block;
+}
+
+.screenshot p {
+  padding: 15px;
+  text-align: center;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* CTA Section */
+#cta {
+  background: linear-gradient(135deg, var(--soft-pink), var(--accent));
+  text-align: center;
+  padding: 80px 20px;
+}
+
+#cta h2 {
+  font-size: 2.5rem;
+  color: white;
+  margin-bottom: 15px;
+}
+
+#cta p {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 30px;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .overview-content {
+    grid-template-columns: 1fr;
+  }
+
+  .styles-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  #detail-hero h2 {
+    font-size: 2.2rem;
+  }
+
+  #detail-hero p {
+    font-size: 1.1rem;
+  }
+
+  .container {
+    padding: 40px 20px;
+  }
+
+  .features-grid,
+  .screenshots-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  #detail-hero {
+    padding: 60px 20px;
+    min-height: 30vh;
+  }
+
+  #detail-hero h2 {
+    font-size: 1.8rem;
+  }
+
+  .style-detail img {
+    height: 280px;
+  }
+
+  .screenshot img {
+    height: 220px;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cta-btn {
+    width: 100%;
+  }
+}
