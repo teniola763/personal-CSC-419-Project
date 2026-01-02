@@ -1,5 +1,4 @@
 # Virtual Hairstyle Gallery — CSC 419 Final Project
-
 **Student Name:** Teniola Oluwafolakemi Tedlance  
 **Matric Number:** 2212031603051  
 **Course:** CSC 419 — Final Year Frontend Project  
@@ -8,14 +7,12 @@
 ---
 
 ## 🌐 Live Demo
-
-**Live URL:** https://teniola-csc419-project.netlify.app/  
+**Live URL:** https://teni-indiviual-csc-419-project.netlify.app/  
 **GitHub Repository:** https://github.com/teniola763/personal-CSC-419-Project
 
 ---
 
 ## 📌 Project Overview
-
 A **fully responsive personal portfolio website** showcasing my skills as a frontend developer. The centerpiece is the **Virtual Hairstyle Gallery** — a web application featuring **62 Black hairstyles** across **6 major categories**, demonstrating my ability to design, build, and deploy a real-world application.
 
 ---
@@ -28,6 +25,7 @@ A **fully responsive personal portfolio website** showcasing my skills as a fron
 - Skills highlighted: HTML5, CSS3, JavaScript (ES6+), Responsive Design
 
 ### 2) Projects Section ✓ (4 Projects)
+
 #### a) Virtual Hairstyle Gallery (Main Project)
 - 62 hairstyles across 6 categories
 - Interactive filtering + category detail pages
@@ -35,18 +33,18 @@ A **fully responsive personal portfolio website** showcasing my skills as a fron
 
 #### b) Invoice Generator App
 - Invoice creation tool with dynamic generation and validation  
-- Live: https://teniola-csc419-project.netlify.app/invoice-app/starter-code/index.html
+- Live: https://teni-indiviual-csc-419-project.netlify.app/invoice-app/starter-code/index.html
 
 #### c) Product List with Cart
 - E-commerce cart with real-time calculations  
-- Live: https://teniola-csc419-project.netlify.app/product-list-with-cart-main/index.html
+- Live: https://teni-indiviual-csc-419-project.netlify.app/product-list-with-cart-main/index.html
 
 #### d) Rock Paper Scissors Game
 - Interactive game with animations and score tracking  
-- Live: https://teniola-csc419-project.netlify.app/rock-paper-scissors-master/index.html
+- Live: https://teni-indiviual-csc-419-project.netlify.app/rock-paper-scissors-master/index.html
 
 ### 3) Call to Action (CTA) ✓
-- Functional **Email** button
+- Functional **Email** button: ftedlance@gmail.com
 - Functional **WhatsApp** link: https://wa.me/2347015916858
 
 ### 4) Dedicated Project Details Page ✓
@@ -64,7 +62,7 @@ Works across:
 - **Desktop** (>1024px)
 
 ### Deployment ✅
-Hosted on **Netlify**: https://teniola-csc419-project.netlify.app/
+Hosted on **Netlify**: https://teni-indiviual-csc-419-project.netlify.app/
 
 ### Originality ✅
 Custom design and layout (not a template), with a consistent personal theme and custom UI decisions.
@@ -77,7 +75,7 @@ Custom design and layout (not a template), with a consistent personal theme and 
 ---
 
 ## 📂 Project Structure
-
+```
 personal-CSC-419-Project/
 ├── index.html
 ├── styles.css
@@ -95,7 +93,7 @@ personal-CSC-419-Project/
 ├── product-list-with-cart-main/
 ├── rock-paper-scissors-master/
 └── README.md
-
+```
 
 ---
 
@@ -111,7 +109,6 @@ personal-CSC-419-Project/
 ---
 
 ## 📞 Contact
-
 **Email:** ftedlance@gmail.com  
 **WhatsApp:** https://wa.me/2347015916858  
 **GitHub:** https://github.com/teniola763
@@ -119,4 +116,3 @@ personal-CSC-419-Project/
 ---
 
 **© 2025 Teniola Oluwafolakemi Tedlance**  
-*Last Updated: December 30, 2025*
